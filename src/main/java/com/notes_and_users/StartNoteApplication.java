@@ -18,7 +18,10 @@ public class StartNoteApplication {
 
     @Profile("demo")
     @Bean
-    CommandLineRunner initDatabase(NoteRepository repository) {
+    CommandLineRunner initDatabase(NoteRepository repository, UserRepository urepository) {
+        urepository.save(new User("user", "user@user.com", "password"));
+        urepository.save(new User("admin", "admin@admin.com", "password"));
+
         return args -> {
             repository.save(new Note("A Guide to the Bodhisattva Way of Life", "Santideva", new BigDecimal("15.41")));
             repository.save(new Note("The Life-Changing Magic of Tidying Up", "Marie Kondo", new BigDecimal("9.69")));

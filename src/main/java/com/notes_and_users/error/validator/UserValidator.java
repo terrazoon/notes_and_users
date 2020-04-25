@@ -5,9 +5,9 @@ import javax.validation.ConstraintValidatorContext;
 import java.util.Arrays;
 import java.util.List;
 
-public class UserValidator implements ConstraintValidator<User, String> {
+public class UserValidator implements ConstraintValidator<ValidUser, String> {
 
-    List<String> users = Arrays.asList("Santideva", "Marie Kondo", "Martin Fowler");
+    List<String> users = Arrays.asList("user", "admin");
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {

@@ -13,7 +13,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 @Constraint(validatedBy = UserValidator.class)
 @Documented
-public @interface User {
+public @interface ValidUser {
 
     String message() default "User is not allowed.";
 

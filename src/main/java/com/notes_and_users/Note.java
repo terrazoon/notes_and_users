@@ -1,6 +1,6 @@
 package com.notes_and_users;
 
-import com.notes_and_users.error.validator.User;
+import com.notes_and_users.error.validator.ValidUser;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,7 +20,7 @@ public class Note {
     @NotEmpty(message = "Please provide a name")
     private String name;
 
-    @User
+    @ValidUser
     @NotEmpty(message = "Please provide a user")
     private String user;
 
