@@ -37,7 +37,7 @@ public class NoteControllerTest {
 
     @Before
     public void init() {
-        Note note = new Note(1L, "A Guide to the Bodhisattva Way of Life", "Santideva", new BigDecimal("15.41"));
+        Note note = new Note(1L, "My Title", "My Text");
         when(mockRepository.findById(1L)).thenReturn(Optional.of(note));
     }
 
@@ -49,10 +49,9 @@ public class NoteControllerTest {
         mockMvc.perform(get("/notes/1"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id", is(1)))
-                .andExpect(jsonPath("$.name", is("A Guide to the Bodhisattva Way of Life")))
-                .andExpect(jsonPath("$.user", is("Santideva")))
-                .andExpect(jsonPath("$.price", is(15.41)));
+                .andExpect(jsonPath("$.userId", is(1L)))
+                .andExpect(jsonPath("$.title", is("My Title")))
+                .andExpect(jsonPath("$.note", is("My Text")));
     }
 
     @Test

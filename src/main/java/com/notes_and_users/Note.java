@@ -5,10 +5,8 @@ import com.notes_and_users.error.validator.ValidUser;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.math.BigDecimal;
 
 @Entity
 public class Note {
@@ -17,33 +15,40 @@ public class Note {
     @GeneratedValue
     private Long id;
 
-    @NotEmpty(message = "Please provide a name")
-    private String name;
+    //@ValidUser
+    private Long userId;
 
-    @ValidUser
-    @NotEmpty(message = "Please provide a user")
-    private String user;
+    @NotEmpty(message = "Please provide a title")
+    private String title;
 
-    @NotNull(message = "Please provide a price")
-    @DecimalMin("1.00")
-    private BigDecimal price;
+    @NotEmpty(message = "Please provide a note")
+    private String note;
+
+    private Long createTime;
+    private Long lastUpdateTime;
 
     // avoid this "No default constructor for entity"
     public Note() {
     }
 
-    public Note(Long id, String name, String user, BigDecimal price) {
-        this.id = id;
-        this.name = name;
-        this.user = user;
-        this.price = price;
+    public Note(Long userId, String title, String note) {
+        this.userId = userId;
+        this.title = title;
+        this.note = note;
+        Long myTime = System.currentTimeMillis();
+        this.createTime = myTime;
+        this.lastUpdateTime = myTime;
     }
 
-    public Note(String name, String user, BigDecimal price) {
-        this.name = name;
-        this.user = user;
-        this.price = price;
-    }
+//    public Note(String title, String note) {
+//        // TODO FIX THIS
+//        this.userId = 1L;
+//        this.title = title;
+//        this.note = note;
+//        Long myTime = System.currentTimeMillis();
+//        this.createTime = myTime;
+//        this.lastUpdateTime = myTime;
+//    }
 
     public Long getId() {
         return id;
@@ -53,37 +58,40 @@ public class Note {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUserId(Long user_id) {
+        this.userId = userId;
     }
 
-    public String getUser() {
-        return user;
+    public String getTitle() {
+        return title;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public BigDecimal getPrice() {
-        return price;
+    public String getNote() {
+        return note;
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
+    public void setNote(String note) {
+        this.note = note;
     }
+
 
     @Override
     public String toString() {
         return "Note{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", user='" + user + '\'' +
-                ", price=" + price +
+                ", userId='" + userId + '\'' +
+                ", title='" + title + '\'' +
+                ", note='" + note + '\'' +
+                ", createTime='" + createTime + '\'' +
+                ", lastUpdateTime='" + lastUpdateTime + '\'' +
                 '}';
     }
 }

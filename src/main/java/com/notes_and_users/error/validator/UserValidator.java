@@ -1,18 +1,22 @@
 package com.notes_and_users.error.validator;
 
+import com.notes_and_users.User;
+import com.notes_and_users.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.util.Arrays;
 import java.util.List;
 
-public class UserValidator implements ConstraintValidator<ValidUser, String> {
+public class UserValidator implements ConstraintValidator<ValidUser, Long> {
 
-    List<String> users = Arrays.asList("user", "admin");
+    List<Long> users = Arrays.asList(1L, 2L);
 
     @Override
-    public boolean isValid(String value, ConstraintValidatorContext context) {
+    public boolean isValid(Long value, ConstraintValidatorContext context) {
         return true;
-        //return users.contains(value);
-
+        //return (users.contains(value));
     }
 }

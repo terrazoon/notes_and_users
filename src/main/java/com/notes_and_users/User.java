@@ -23,6 +23,9 @@ public class User {
     @NotEmpty(message = "Please provide an password")
     private String password;
 
+    private Long createTime;
+    private Long lastUpdateTime;
+
     // avoid this "No default constructor for entity"
     public User() {
     }
@@ -33,8 +36,11 @@ public class User {
         this.email = email;
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String hashedPassword = passwordEncoder.encode(password);
-
         this.password = hashedPassword;
+        Long myTime = System.currentTimeMillis();
+        this.createTime = myTime;
+        this.lastUpdateTime = myTime;
+
     }
 
     public User(String name, String email, String password) {
@@ -43,6 +49,10 @@ public class User {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String hashedPassword = passwordEncoder.encode(password);
         this.password = hashedPassword;
+        Long myTime = System.currentTimeMillis();
+        this.createTime = myTime;
+        this.lastUpdateTime = myTime;
+
     }
 
     public Long getId() {
@@ -83,6 +93,8 @@ public class User {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
+                ", createTime='" + createTime + '\'' +
+                ", lastUpdateTime='" + lastUpdateTime + '\'' +
                 '}';
     }
 }

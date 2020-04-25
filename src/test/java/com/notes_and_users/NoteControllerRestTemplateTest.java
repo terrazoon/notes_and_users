@@ -39,14 +39,14 @@ public class NoteControllerRestTemplateTest {
 
     @Before
     public void init() {
-        Note note = new Note(1L, "A Guide to the Bodhisattva Way of Life", "Santideva", new BigDecimal("15.41"));
+        Note note = new Note(1L, "My Title", "My Text");
         when(mockRepository.findById(1L)).thenReturn(Optional.of(note));
     }
 
     @Test
     public void find_login_ok() throws Exception {
 
-        String expected = "{id:1,name:\"A Guide to the Bodhisattva Way of Life\",author:\"Santideva\",price:15.41}";
+        String expected = "{userId:1,title:\"My Title\",note:\"My Text\"}";
 
         ResponseEntity<String> response = restTemplate
                 .withBasicAuth("user", "password")

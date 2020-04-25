@@ -28,12 +28,27 @@ Get a list of all notes in the database
 curl -u "user:password" -v localhost:8080/notes
 ```
 
+Get a specific note (by id)
+```
+curl -u "user:password" -v localhost:8080/notes/1
+```
+
 Add a new note
 
 ```
-curl -X POST -H "Content-Type: application/json" -u "admin:password" -d "{\"name\":\"xyz\",\"user\":\"xyz\", \"price\":\"123\"}" http://localhost:8080/notes
+curl -X POST -H "Content-Type: application/json" -u "admin:password" -d "{\"userId\":1, \"title\":\"TITLE xyz\",\"note\":\"TEXT xyz\"}" http://localhost:8080/notes
 ```
 
+Update a note
+```
+curl -X PUT -H "Content-Type: application/json" -u "admin:password" -d "{\"userId\":1, \"title\":\"NEW TITLE xyz\",\"note\":\"TEXT xyz\"}" http://localhost:8080/notes/2
+```
+
+Delete a note
+
+```
+curl -X DELETE -u "admin:password" -v localhost:8080/notes/1
+```
 
 ## Deployment
 

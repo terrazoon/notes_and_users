@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @SpringBootApplication
 public class StartNoteApplication {
@@ -23,9 +24,10 @@ public class StartNoteApplication {
         urepository.save(new User("admin", "admin@admin.com", "password"));
 
         return args -> {
-            repository.save(new Note("A Guide to the Bodhisattva Way of Life", "Santideva", new BigDecimal("15.41")));
-            repository.save(new Note("The Life-Changing Magic of Tidying Up", "Marie Kondo", new BigDecimal("9.69")));
-            repository.save(new Note("Refactoring: Improving the Design of Existing Code", "Martin Fowler", new BigDecimal("47.99")));
+            repository.save(new Note(1L, "User's First Post", "I have nothing to say"));
+            repository.save(new Note(1L, "User's Second Post", "I still haven't thought of anything"));
+            repository.save(new Note(2L, "Admin's First Post", "I have many things to say because I am the admin"));
         };
     }
+
 }
