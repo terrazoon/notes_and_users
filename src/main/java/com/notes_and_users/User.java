@@ -1,5 +1,7 @@
 package com.notes_and_users;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -29,15 +31,18 @@ public class User {
         this.id = id;
         this.name = name;
         this.email = email;
-        // TODO bcrypt
-        this.password = password;
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String hashedPassword = passwordEncoder.encode(password);
+
+        this.password = hashedPassword;
     }
 
     public User(String name, String email, String password) {
         this.name = name;
         this.email = email;
-        // TODO bcrypt
-        this.password = password;
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String hashedPassword = passwordEncoder.encode(password);
+        this.password = hashedPassword;
     }
 
     public Long getId() {
