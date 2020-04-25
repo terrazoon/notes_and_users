@@ -11,8 +11,8 @@ public class UserValidator implements ConstraintValidator<User, String> {
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-
-        return users.contains(value);
+        return true;
+        //return users.contains(value);
 
     }
 }

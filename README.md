@@ -4,77 +4,52 @@ This is a demo project for spring boot + mysql.
 
 ## Getting Started
 
-1. run the script notes_demo.sql in mysql to set up the demo database.
-
 ### Prerequisites
 
-What things you need to install the software and how to install them
-
-```
-Give examples
-```
+mysql, Intellij
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
 
-Say what the step will be
-
-```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
+1. Install mysql
+2. Load this project in Intellij
+3. Configure your mysql connection in application.properties
+4. right-click on StartNoteApplication and run it
+5. Run a CURL command from the command line (see below) and check the results
 
 ## Running the tests
 
-Explain how to run the automated tests for this system
+Open the project in Intellij, open the Maven Lifecycle, and run either compile or tests.
 
-### Break down into end to end tests
+### Sample CURL Commands to test CRUD Functionality
 
-Explain what these tests test and why
+Get a list of all notes in the database
+```
+curl -u "user:password" -v localhost:8080/notes
+```
+
+Add a new note
 
 ```
-Give an example
+curl -X POST -H "Content-Type: application/json" -u "admin:password" -d "{\"name\":\"xyz\",\"user\":\"xyz\", \"price\":\"123\"}" http://localhost:8080/notes
 ```
 
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
 
 ## Deployment
 
 Add additional notes about how to deploy this on a live system
 
-## Built With
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+Version 0.1
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+* **Kenneth Kehl** - *Initial work* - [terrazoon](https://github.com/terrazoon)
 
 ## License
 
@@ -82,7 +57,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
-
+The earliest version of this application was based off sample code from www.mkyong.com
