@@ -1,4 +1,4 @@
-package com.notes_and_users;
+package com.notes_and_users.models;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 

@@ -1,7 +1,12 @@
-package com.notes_and_users;
+package com.notes_and_users.controllers;
 
 import com.notes_and_users.error.NoteNotFoundException;
 import com.notes_and_users.error.NoteUnSupportedFieldPatchException;
+import com.notes_and_users.error.UnauthorizedUserException;
+import com.notes_and_users.models.Note;
+import com.notes_and_users.models.User;
+import com.notes_and_users.repositories.NoteRepository;
+import com.notes_and_users.repositories.UserRepository;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,16 +36,7 @@ public class NoteController {
     // Find
     @GetMapping("/notes")
     List<Note> findAll() {
-        // TODO refactor this ... it works but ...
-        Long userId = getUserIdForUserName();
-        List<Note> notes = new ArrayList<>();
-        List<Note> noteList = repository.findAll();
-        for (Note note: noteList) {
-            if (note.getUserId().equals(userId)) {
-                notes.add(note);
-            }
-        }
-        return notes;
+        return repository.findAll();
     }
 
     // Save
@@ -48,10 +44,8 @@ public class NoteController {
     @ResponseStatus(HttpStatus.CREATED)
     Note newNote(@Valid @RequestBody Note newNote) {
         Long userId = getUserIdForUserName();
-        if (userId != null && userId.equals(newNote.getUserId())) {
-            return repository.save(newNote);
-        }
-        return null;
+        newNote.setUserId(userId);
+        return repository.save(newNote);
     }
 
     // Find
@@ -64,7 +58,12 @@ public class NoteController {
     // Save or update
     @PutMapping("/notes/{id}")
     Note saveOrUpdate(@RequestBody Note newNote, @PathVariable Long id) {
-
+        Long userId = getUserIdForUserName();
+        if (newNote.getUserId() == null) {
+            throw new UnauthorizedUserException(null, id);
+        } else if (!userId.equals(newNote.getUserId())) {
+            throw new UnauthorizedUserException(userId, id);
+        }
         return repository.findById(id)
                 .map(x -> {
                     x.setTitle(newNote.getTitle());
@@ -77,34 +76,15 @@ public class NoteController {
                 });
     }
 
-    // update author only
-    @PatchMapping("/notes/{id}")
-    Note patch(@RequestBody Map<String, String> update, @PathVariable Long id) {
-
-        return repository.findById(id)
-                .map(x -> {
-
-                    String user = update.get("user");
-                    // TODO fix this!! map user to user id
-                    if (!StringUtils.isEmpty(user)) {
-                        x.setUserId(1L);
-
-                        // better create a custom method to update a value = :newValue where id = :id
-                        return repository.save(x);
-                    } else {
-                        throw new NoteUnSupportedFieldPatchException(update.keySet());
-                    }
-
-                })
-                .orElseGet(() -> {
-                    throw new NoteNotFoundException(id);
-                });
-
-    }
-
     @DeleteMapping("/notes/{id}")
     void deleteNote(@PathVariable Long id) {
-        repository.deleteById(id);
+        Long userId = getUserIdForUserName();
+        Note noteToDelete = findOne(id);
+        if (noteToDelete.getUserId().equals(userId)) {
+            repository.deleteById(id);
+        } else {
+            throw new UnauthorizedUserException(userId, id);
+        }
     }
 
     private Long getUserIdForUserName() {
@@ -118,7 +98,5 @@ public class NoteController {
             }
         }
         return userId;
-
     }
-
 }

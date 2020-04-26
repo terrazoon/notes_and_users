@@ -1,6 +1,8 @@
-package com.notes_and_users;
+package com.notes_and_users.controllers;
 
 
+import com.notes_and_users.models.Note;
+import com.notes_and_users.repositories.NoteRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

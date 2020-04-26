@@ -1,7 +1,7 @@
 package com.notes_and_users.error.validator;
 
-import com.notes_and_users.User;
-import com.notes_and_users.UserRepository;
+import com.notes_and_users.models.User;
+import com.notes_and_users.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 

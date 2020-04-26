@@ -1,4 +1,4 @@
-package com.notes_and_users;
+package com.notes_and_users.models;
 
 import com.notes_and_users.error.validator.ValidUser;
 
@@ -39,16 +39,6 @@ public class Note {
         this.createTime = myTime;
         this.lastUpdateTime = myTime;
     }
-
-//    public Note(String title, String note) {
-//        // TODO FIX THIS
-//        this.userId = 1L;
-//        this.title = title;
-//        this.note = note;
-//        Long myTime = System.currentTimeMillis();
-//        this.createTime = myTime;
-//        this.lastUpdateTime = myTime;
-//    }
 
     public Long getId() {
         return id;

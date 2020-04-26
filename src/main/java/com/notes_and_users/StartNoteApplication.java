@@ -1,5 +1,9 @@
 package com.notes_and_users;
 
+import com.notes_and_users.models.Note;
+import com.notes_and_users.models.User;
+import com.notes_and_users.repositories.NoteRepository;
+import com.notes_and_users.repositories.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
