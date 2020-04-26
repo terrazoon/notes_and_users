@@ -1,10 +1,13 @@
 package com.notes_and_users.models;
 
+import org.hibernate.annotations.NaturalId;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
 @Entity
@@ -18,9 +21,12 @@ public class User {
     private String name;
 
     @NotEmpty(message = "Please provide an email")
+    //@Email
+    //@NaturalId
     private String email;
 
-    @NotEmpty(message = "Please provide an password")
+    @NotEmpty(message = "Please provide a password")
+    //@Length(min=8, message = "The password must be at least 8 characters")
     private String password;
 
     private Long createTime;

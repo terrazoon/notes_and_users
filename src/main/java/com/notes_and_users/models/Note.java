@@ -1,6 +1,7 @@
 package com.notes_and_users.models;
 
 import com.notes_and_users.error.validator.ValidUser;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -18,13 +19,16 @@ public class Note {
     @GeneratedValue
     private Long id;
 
+
     //@ValidUser
     private Long userId;
 
     @NotEmpty(message = "Please provide a title")
+    //@Length(max=50, message = "The title cannot be more than 50 characters")
     private String title;
 
     @NotEmpty(message = "Please provide a note")
+    //@Length(max=1000, message = "The note cannot be more than 1000 characters")
     private String note;
 
     private Long createTime;
@@ -81,6 +85,21 @@ public class Note {
     }
 
 
+    public Long getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Long createTime) {
+        this.createTime = createTime;
+    }
+
+    public Long getLastUpdateTime() {
+        return lastUpdateTime;
+    }
+
+    public void setLastUpdateTime(Long lastUpdateTime) {
+        this.lastUpdateTime = lastUpdateTime;
+    }
     @Override
     public String toString() {
         return "Note{" +
