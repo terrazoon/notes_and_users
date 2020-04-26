@@ -47,12 +47,10 @@ public class NoteController {
     @ResponseStatus(HttpStatus.CREATED)
     Note newNote(@Valid @RequestBody Note newNote) {
         Long userId = getUserIdForUserName();
-        System.out.println("enter newNote!!! userId = " + userId);
         if (userId == null) {
             throw new UnauthorizedUserException(userId, newNote.getId());
         }
         newNote.setUserId(userId);
-        System.out.println("This is what we are saving " + newNote);
         return repository.save(newNote);
     }
 
@@ -111,9 +109,7 @@ public class NoteController {
             UserDetails userDetails =
                     (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             List<User> userList = userRepository.findAll();
-            System.out.println("Size of USER LIST " + userList.size());
             for (User user : userList) {
-                System.out.println("FOUND A USER " + user);
                 if (userDetails.getUsername().equals(user.getName())) {
                     userId = user.getId();
                 }
