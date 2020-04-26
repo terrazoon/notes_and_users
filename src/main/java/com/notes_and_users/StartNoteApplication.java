@@ -10,9 +10,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 
-import java.math.BigDecimal;
-import java.util.List;
-
 @SpringBootApplication
 public class StartNoteApplication {
 

@@ -1,15 +1,18 @@
 # Project Title
 
-This is a demo project for spring boot + mysql.
+Notes and Users
 
 ## Getting Started
 
+This is a demo project to show a Spring Boot REST API with http authentication.  For demo purposes,
+there are two defined users ('user' and 'admin').  Each one is authorized to create, read, update,
+and delete their own notes -- but not the notes of the other user.
+
 ### Prerequisites
 
-mysql, Intellij
+mysql, IntelliJ
 
 ### Installing
-
 
 1. Install mysql
 2. Load this project in Intellij
@@ -19,7 +22,7 @@ mysql, Intellij
 
 ## Running the tests
 
-Open the project in Intellij, open the Maven Lifecycle, and run either compile or tests.
+Open the project in IntelliJ, open the Maven Lifecycle, and run tests.
 
 ### Sample CURL Commands to test CRUD Functionality
 
@@ -49,14 +52,6 @@ Delete a note
 ```
 curl -X DELETE -u "admin:password" -v localhost:8080/notes/1
 ```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
-
-
-## Contributing
-
 
 ## Versioning
 

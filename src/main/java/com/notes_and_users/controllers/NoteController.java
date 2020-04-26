@@ -48,6 +48,9 @@ public class NoteController {
     Note newNote(@Valid @RequestBody Note newNote) {
         Long userId = getUserIdForUserName();
         System.out.println("enter newNote!!! userId = " + userId);
+        if (userId == null) {
+            throw new UnauthorizedUserException(userId, newNote.getId());
+        }
         newNote.setUserId(userId);
         System.out.println("This is what we are saving " + newNote);
         return repository.save(newNote);
@@ -59,7 +62,6 @@ public class NoteController {
     Note findOne(@PathVariable @Min(1) Long id) {
         Long userId = getUserIdForUserName();
         Optional<Note> note = repository.findById(id);
-
         if (!note.isPresent()) {
             throw new NoteNotFoundException(id);
         } else if (!note.get().getUserId().equals(userId)) {
@@ -73,7 +75,7 @@ public class NoteController {
     @PutMapping("/notes/{id}")
     Note saveOrUpdate(@RequestBody Note newNote, @PathVariable Long id) {
         Long userId = getUserIdForUserName();
-        if (!userId.equals(newNote.getUserId())) {
+        if (!newNote.getUserId().equals(userId)) {
             throw new UnauthorizedUserException(userId, id);
         }
         Long now = System.currentTimeMillis();

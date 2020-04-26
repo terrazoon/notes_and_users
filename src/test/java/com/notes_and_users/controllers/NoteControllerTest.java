@@ -17,6 +17,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -30,6 +31,10 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -55,11 +60,7 @@ public class NoteControllerTest {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 
         Note note = new Note(1L, "My Title", "My Text");
-        User user = new User();
-        user.setId(1L);
-        user.setName("USER");
-        user.setEmail("myemail@email.com");
-        user.setPassword("password");
+        User user = new User(1L, "USER", "myemail@email.com", "password");
         List<User> userList = new ArrayList<>();
         userList.add(user);
         List<Note> noteList = new ArrayList<>();
@@ -98,6 +99,14 @@ public class NoteControllerTest {
 
     @WithMockUser("USER")
     @Test
+    public void find_nonexistent() throws Exception {
+        mockMvc.perform(get("/notes/7111"))
+                .andDo(print())
+                .andExpect(status().isNotFound());
+    }
+
+    @WithMockUser("USER")
+    @Test
     public void test_find_all() throws Exception {
         mockMvc.perform(
                 get("/notes")
@@ -107,9 +116,6 @@ public class NoteControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.*").exists())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.*.title").isNotEmpty());
     }
-
-
-
 
     @WithMockUser("USER")
     @Test
@@ -126,6 +132,79 @@ public class NoteControllerTest {
                 .andDo(print())
                 .andExpect(status().isUnauthorized());
     }
+
+    @WithMockUser("USER")
+    @Test
+    public void testCreateNote() throws Exception
+    {
+        mockMvc.perform( MockMvcRequestBuilders
+                .post("/notes")
+                .content("{\"id\": 2, \"userId\": 1, \"title\": \"test title\", \"note\": \"test note\"}")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated());
+    }
+
+    @WithMockUser("UNKNOWN_USER")
+    @Test
+    public void testCreateNoteUnauthorized() throws Exception
+    {
+        mockMvc.perform( MockMvcRequestBuilders
+                .post("/notes")
+                .content("{\"id\": 2, \"userId\": 1, \"title\": \"test title\", \"note\": \"test note\"}")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized());
+    }
+
+
+    @WithMockUser("USER")
+    @Test
+    public void testUpdateNote() throws Exception
+    {
+        mockMvc.perform( MockMvcRequestBuilders
+                .put("/notes/1")
+                .content("{\"id\": 1, \"userId\": 1, \"title\": \"test title222\", \"note\": \"test note\"}")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+    }
+
+    @WithMockUser("USER")
+    @Test
+    public void testUpdateNoteButItCreates() throws Exception
+    {
+        mockMvc.perform( MockMvcRequestBuilders
+                .put("/notes/2")
+                .content("{\"id\": 2, \"userId\": 1, \"title\": \"test title\", \"note\": \"test note\"}")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+    }
+
+    @WithMockUser("UNKNOWN USER")
+    @Test
+    public void testUpdateNoteUnauthorized() throws Exception
+    {
+        mockMvc.perform( MockMvcRequestBuilders
+                .put("/notes/2")
+                .content("{\"id\": 2, \"userId\": 1, \"title\": \"test title\", \"note\": \"test note\"}")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized());
+
+        mockMvc.perform( MockMvcRequestBuilders
+                .put("/notes/2")
+                .content("{\"id\": 2, \"userId\": 1, \"title\": \"change title\", \"note\": \"test note\"}")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized());
+
+    }
+
+
 
 
 }

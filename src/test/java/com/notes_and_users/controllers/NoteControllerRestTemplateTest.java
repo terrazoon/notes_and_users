@@ -48,36 +48,24 @@ public class NoteControllerRestTemplateTest {
 
     @Before
     public void init() {
-        User user = new User();
-        user.setId(1L);
-        user.setName("user");
-        user.setEmail("myemail@email.com");
-        user.setPassword("password");
+        User user = new User(1L, "user", "myemail@email.com", "password");
         List<User> userList = new ArrayList<>();
         userList.add(user);
         when(mockUserRepository.findAll()).thenReturn(userList);
-
-
         Note note = new Note(1L, "My Title", "My Text");
         when(mockRepository.findById(1L)).thenReturn(Optional.of(note));
     }
 
     @Test
     public void find_login_ok() throws Exception {
-
         String expected = "{userId:1,title:\"My Title\",note:\"My Text\"}";
-
         ResponseEntity<String> response = restTemplate
                 .withBasicAuth("user", "password")
                 .getForEntity("/notes/1", String.class);
-
         printJSON(response);
-
         assertEquals(MediaType.APPLICATION_JSON_UTF8, response.getHeaders().getContentType());
         assertEquals(HttpStatus.OK, response.getStatusCode());
-
         JSONAssert.assertEquals(expected, response.getBody(), false);
-
     }
 
     @Test
