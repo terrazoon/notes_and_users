@@ -1,12 +1,15 @@
 package com.notes_and_users.models;
 
 import com.notes_and_users.error.validator.ValidUser;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
 public class Note {
@@ -29,6 +32,11 @@ public class Note {
 
     // avoid this "No default constructor for entity"
     public Note() {
+
+        Long myTime = System.currentTimeMillis();
+        this.createTime = myTime;
+        this.lastUpdateTime = myTime;
+
     }
 
     public Note(Long userId, String title, String note) {
@@ -52,7 +60,7 @@ public class Note {
         return userId;
     }
 
-    public void setUserId(Long user_id) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 

@@ -44,7 +44,9 @@ public class NoteController {
     @ResponseStatus(HttpStatus.CREATED)
     Note newNote(@Valid @RequestBody Note newNote) {
         Long userId = getUserIdForUserName();
+        System.out.println("enter newNote!!! userId = " + userId);
         newNote.setUserId(userId);
+        System.out.println("This is what we are saving " + newNote);
         return repository.save(newNote);
     }
 
@@ -59,9 +61,7 @@ public class NoteController {
     @PutMapping("/notes/{id}")
     Note saveOrUpdate(@RequestBody Note newNote, @PathVariable Long id) {
         Long userId = getUserIdForUserName();
-        if (newNote.getUserId() == null) {
-            throw new UnauthorizedUserException(null, id);
-        } else if (!userId.equals(newNote.getUserId())) {
+        if (!userId.equals(newNote.getUserId())) {
             throw new UnauthorizedUserException(userId, id);
         }
         return repository.findById(id)
