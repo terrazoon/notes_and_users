@@ -42,18 +42,18 @@ curl -u "user:password" -v localhost:8080/notes/1
 Add a new note
 
 ```
-curl -X POST -H "Content-Type: application/json" -u "admin:password" -d "{\"userId\":1, \"title\":\"TITLE xyz\",\"note\":\"TEXT xyz\"}" http://localhost:8080/notes
+curl -X POST -H "Content-Type: application/json" -u "user:password" -d "{\"userId\":1, \"title\":\"TITLE xyz\",\"note\":\"TEXT xyz\"}" http://localhost:8080/notes
 ```
 
 Update a note
 ```
-curl -X PUT -H "Content-Type: application/json" -u "admin:password" -d "{\"userId\":1, \"title\":\"NEW TITLE xyz\",\"note\":\"TEXT xyz\"}" http://localhost:8080/notes/2
+curl -X PUT -H "Content-Type: application/json" -u "user:password" -d "{\"userId\":1, \"title\":\"NEW TITLE xyz\",\"note\":\"TEXT xyz\"}" http://localhost:8080/notes/2
 ```
 
 Delete a note
 
 ```
-curl -X DELETE -u "admin:password" -v localhost:8080/notes/1
+curl -X DELETE -u "user:password" -v localhost:8080/notes/1
 ```
 
 ## Versioning
