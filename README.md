@@ -16,9 +16,12 @@ mysql, IntelliJ
 
 1. Install mysql
 2. Load this project in Intellij
-3. Configure your mysql connection in application.properties
-4. right-click on StartNoteApplication and run it
-5. Run a CURL command from the command line (see below) and check the results
+3. Update application.properties
+    a. set your mysql username and password
+    b. make sure the connection settings are correct for your mysql instance
+4. Manually create the database 'notes_demo' by running the query "CREATE DATABBASE notes_demo"
+5. right-click on StartNoteApplication and run it
+6. Run a CURL command from the command line (see below) and check the results
 
 ## Running the tests
 
