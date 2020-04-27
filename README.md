@@ -68,6 +68,4 @@ Version 0.1
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
-## Acknowledgments
-
-The earliest version of this application was based off sample code from www.mkyong.com
+The earliest version of this application was based off sample code from www.mkyong.com, which is licensed under the MIT License.  See the [LICENSE.old](LICENSE.old) file for details
